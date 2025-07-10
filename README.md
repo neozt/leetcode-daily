@@ -1,6 +1,6 @@
 ## LeetCode Daily
 
-Express.js server to provide quick navigation to LeetCode's Problem of the Day.
+Express.js server to provide quick navigation to LeetCode's Problem of the Day. Deployed to AWS Lambda using Serverless Framework.
 
 Access the website here:
 - https://leetcode-daily.neozt.dev/
