@@ -9,7 +9,7 @@ export async function getDailyQuestion() {
     return queryLeetCodeAPI(DAILY_QUESTION_QUERY, {});
 }
 
-export function constructDailyQuestionLink(link, date) {
+export function constructDailyQuestionUrl(link, date) {
     return `${LEETCODE_URL}${link}?envType=daily-question&envId=${date}`
 }
 

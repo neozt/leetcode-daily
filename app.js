@@ -1,6 +1,6 @@
 import serverless from "serverless-http";
 import express from "express";
-import { getDailyQuestion, constructDailyQuestionLink } from "./leetcode-client.js";
+import { getDailyQuestion, constructDailyQuestionUrl } from "./leetcode-client.js";
 import rateLimit from 'express-rate-limit'
 import proxyaddr from 'proxy-addr'
 
@@ -40,14 +40,13 @@ app.get("/about", (req, res) => {
 app.get("/", async (req, res) => {
   const dailyQuestion = await getDailyQuestion()
 
-  const link = dailyQuestion.data.activeDailyCodingChallengeQuestion.link
-  const date = dailyQuestion.data.activeDailyCodingChallengeQuestion.date
+  const { link, date } = dailyQuestion.data.activeDailyCodingChallengeQuestion;
   if (!link) {
     console.error(`Failed to retrieve daily question from Leetcode. link=${link}, response=${JSON.stringify(dailyQuestion)}`);
     throw new Error("Failed to retrieve daily question from Leetcode");
   }
 
-  const dailyQuestionUrl = constructDailyQuestionLink(link, date)
+  const dailyQuestionUrl = constructDailyQuestionUrl(link, date);
   console.log("Redirecting to: ", dailyQuestionUrl);
   return res.redirect(303, dailyQuestionUrl);
 });
