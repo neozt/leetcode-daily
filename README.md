@@ -4,7 +4,7 @@ Dynamically redirect users directly to LeetCode's Problem of the Day. Backend Ex
 
 Access the website here:
 - https://leetcode-daily.neozt.dev/
-- https://leetcode-daily.neozt.dev/daily
+- https://leetcode-daily.neozt.dev/about
 
 ## 🛠️ Stack
 

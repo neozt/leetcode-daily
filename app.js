@@ -12,21 +12,22 @@ const limiter = rateLimit({
   limit: 60,
   standardHeaders: 'draft-7',
   legacyHeaders: false,
-  message: 'Too many request from this IP, try again in 1 hour',
+  message: 'Too many request, please try again later.',
 });
 
 app.use(limiter);
 
 app.set('trust proxy', 1)
 
-app.get("/", (req, res) => {
+app.get("/about", (req, res) => {
   return res.status(200).json({
     message: "LeetCode does not provide any way to directly navigate to today's Daily Question, so I did it myself. Bookmark the provided URL to be redirected to each day's Daily Question.",
-    url: `${BASE_URL}/daily`
+    url: `${BASE_URL}/`,
+    aboutUrl: `${BASE_URL}/about`
   });
 });
 
-app.get("/daily", async (req, res) => {
+app.get("/", async (req, res) => {
   const dailyQuestion = await getDailyQuestion()
 
   const link = dailyQuestion.data.activeDailyCodingChallengeQuestion.link
@@ -41,7 +42,8 @@ app.get("/daily", async (req, res) => {
   return res.redirect(303, dailyQuestionUrl);
 });
 
-app.get('/ip', (request, response) => response.send(request.ip))
+// Used for debugging proxy
+// app.get('/ip', (request, response) => response.send(request.ip))
 
 app.use((req, res) => {
   return res.status(404).json({

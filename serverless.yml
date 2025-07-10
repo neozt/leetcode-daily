@@ -19,5 +19,5 @@ functions:
     logRetentionInDays: 14
     events:
       - httpApi: "GET /"
-      - httpApi: "GET /daily"
+      - httpApi: "GET /about"
 #      - httpApi: "GET /ip"
