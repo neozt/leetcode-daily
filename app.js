@@ -2,10 +2,13 @@ import serverless from "serverless-http";
 import express from "express";
 import { getDailyQuestion, constructDailyQuestionLink } from "./leetcode-client.js";
 import rateLimit from 'express-rate-limit'
+import proxyaddr from 'proxy-addr'
 
 const BASE_URL = process.env.BASE_URL;
 
 const app = express();
+
+app.set('trust proxy', 2); // For some reason req.ip still returns the proxy IP. See limiter.keyGenerator for workaround.
 
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
@@ -13,11 +16,18 @@ const limiter = rateLimit({
   standardHeaders: 'draft-7',
   legacyHeaders: false,
   message: 'Too many request, please try again later.',
+  keyGenerator: (req) => {
+    // Tried following https://github.com/express-rate-limit/express-rate-limit/wiki/Troubleshooting-Proxy-Issues to solve proxy issue,
+    // but can't get req.ip to return the true client IP after setting trust proxy to 2, even though req.ips shows [clientIp, proxyIp].
+    // Workaround by directly using the underlying library to generate key for the rate limiter.
+    const clientIp = proxyaddr(req, (address, i) => {
+      return i < 2;
+    });
+    return clientIp;
+  }
 });
 
 app.use(limiter);
-
-app.set('trust proxy', 1)
 
 app.get("/about", (req, res) => {
   return res.status(200).json({
@@ -43,7 +53,12 @@ app.get("/", async (req, res) => {
 });
 
 // Used for debugging proxy
-// app.get('/ip', (request, response) => response.send(request.ip))
+// app.get('/ip', (request, response) => {
+//   return response.json({
+//     ip: request.ip,
+//     ips: request.ips,
+//   })
+// })
 
 app.use((req, res) => {
   return res.status(404).json({
