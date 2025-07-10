@@ -1,6 +1,6 @@
 import serverless from "serverless-http";
 import express from "express";
-import { getDailyQuestion, constructDailyQuestionUrl } from "./leetcode-client.js";
+import { fetchDailyQuestion, constructDailyQuestionUrl } from "./leetcode-client.js";
 import rateLimit from 'express-rate-limit'
 import proxyaddr from 'proxy-addr'
 
@@ -26,19 +26,10 @@ const limiter = rateLimit({
     return clientIp;
   }
 });
-
 app.use(limiter);
 
-app.get("/about", (req, res) => {
-  return res.status(200).json({
-    message: "LeetCode does not provide any way to directly navigate to today's Daily Question, so I did it myself. Bookmark the provided URL to be redirected to each day's Daily Question.",
-    url: `${BASE_URL}/`,
-    github: 'https://github.com/neozt/leetcode-daily',
-  });
-});
-
 app.get("/", async (req, res) => {
-  const dailyQuestion = await getDailyQuestion()
+  const dailyQuestion = await fetchDailyQuestion();
 
   const { link, date } = dailyQuestion.data.activeDailyCodingChallengeQuestion;
   if (!link) {
@@ -49,6 +40,14 @@ app.get("/", async (req, res) => {
   const dailyQuestionUrl = constructDailyQuestionUrl(link, date);
   console.log("Redirecting to: ", dailyQuestionUrl);
   return res.redirect(303, dailyQuestionUrl);
+});
+
+app.get("/about", (req, res) => {
+  return res.status(200).json({
+    message: "LeetCode does not provide any way to directly navigate to today's Daily Question, so I did it myself. Bookmark the provided URL to be redirected to each day's Daily Question.",
+    url: `${BASE_URL}/`,
+    github: 'https://github.com/neozt/leetcode-daily',
+  });
 });
 
 // Used for debugging proxy

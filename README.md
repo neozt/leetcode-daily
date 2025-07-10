@@ -21,10 +21,6 @@ Access the website here:
 - The site is deployed to AWS Lambda using Serverless Framework.
 - Run `serverless deploy` to deploy latest changes.
 
-## Potential Improvements
-a. Cache LeetCode API calls to improve performance.  
-b. Save and retrieve Daily Questions data to and from Valkey/Redis to minimize API calls.  
-
 ## Acknowledgements
 
 Code for calling LeetCode's GrapQL API taken from [alfa-leetcode-api project](https://github.com/alfaarghya/alfa-leetcode-api).
