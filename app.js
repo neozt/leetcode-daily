@@ -33,7 +33,7 @@ app.get("/about", (req, res) => {
   return res.status(200).json({
     message: "LeetCode does not provide any way to directly navigate to today's Daily Question, so I did it myself. Bookmark the provided URL to be redirected to each day's Daily Question.",
     url: `${BASE_URL}/`,
-    aboutUrl: `${BASE_URL}/about`
+    github: 'https://github.com/neozt/leetcode-daily',
   });
 });
 
