@@ -1,0 +1,20 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: neozt
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: leetcode-daily
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: leetcode-daily
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: ap-southeast-1
+
+functions:
+  api:
+    description: Express.js backend for redirecting to LeetCode's Problem of the Day.
+    handler: app.handler
+    logRetentionInDays: 14
+    events:
+      - httpApi: "GET /"
+      - httpApi: "GET /daily"
