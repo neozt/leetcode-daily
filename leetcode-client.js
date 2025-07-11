@@ -24,6 +24,7 @@ export async function fetchDailyQuestion() {
 }
 
 export function constructDailyQuestionUrl(link, date) {
+    // eg https://leetcode.com/problems/meeting-rooms-iii/?envType=daily-question&envId=2025-07-11
     return `${LEETCODE_URL}${link}?envType=daily-question&envId=${date}`
 }
 
