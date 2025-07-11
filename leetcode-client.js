@@ -1,4 +1,4 @@
-import { DAILY_QUESTION_QUERY } from './leetcode-queries.js'
+import {DAILY_QUESTION_QUERY} from './leetcode-queries.js'
 import axios from 'axios'
 import NodeCache from 'node-cache'
 
