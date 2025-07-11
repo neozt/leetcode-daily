@@ -16,6 +16,7 @@ functions:
   api:
     description: Express.js backend for redirecting to LeetCode's Problem of the Day.
     handler: app.handler
+    memorySize: 128
     logRetentionInDays: 14
     events:
       - httpApi: "GET /"
