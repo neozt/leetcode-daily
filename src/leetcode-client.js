@@ -11,9 +11,9 @@ const DAILY_QUESTION_CACHE_TTL_SECONDS = 5 * 60;
 
 const cache = new NodeCache();
 
-export async function fetchDailyQuestion() {
+export async function fetchDailyQuestion(bypassCache = false) {
   const cachedResponse = cache.get(DAILY_QUESTION_CACHE_KEY);
-  if (cachedResponse) {
+  if (!bypassCache && cachedResponse) {
     return cachedResponse;
   }
 

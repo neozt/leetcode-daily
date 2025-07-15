@@ -12,6 +12,21 @@ provider:
   environment:
     BASE_URL: https://leetcode-daily.neozt.dev
 
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource: "arn:aws:s3:::leetcode-daily/*"
+
+resources:
+  Resources:
+    MyS3Bucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: leetcode-daily
+        VersioningConfiguration:
+          Status: Enabled
+
 functions:
   api:
     description: Express.js backend for redirecting to LeetCode's Problem of the Day.
@@ -21,4 +36,12 @@ functions:
     events:
       - httpApi: "GET /"
       - httpApi: "GET /about"
-#      - httpApi: "GET /ip"
+  #      - httpApi: "GET /ip"
+
+  import-job:
+    description: Scheduled job to save Leetcode POTD data into S3.
+    handler: src/import-job.handler
+    memorySize: 128
+    logRetentionInDays: 14
+    events:
+      - schedule: cron(5 0 * * ? *)
