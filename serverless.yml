@@ -30,7 +30,7 @@ resources:
 functions:
   api:
     description: Express.js backend for redirecting to LeetCode's Problem of the Day.
-    handler: src/app.handler
+    handler: src/functions/app.handler
     memorySize: 128
     logRetentionInDays: 14
     events:
@@ -40,7 +40,7 @@ functions:
 
   import-job:
     description: Scheduled job to save Leetcode POTD data into S3.
-    handler: src/import-job.handler
+    handler: src/functions/import-job.handler
     memorySize: 128
     logRetentionInDays: 14
     events:

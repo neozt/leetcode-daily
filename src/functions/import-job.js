@@ -9,4 +9,6 @@ export const handler = async () => {
   await storePotdData(potdData);
 
   console.log("import-job complete");
+
+  return "Success";
 };
