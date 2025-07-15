@@ -5,7 +5,7 @@ import {
 } from "@aws-sdk/client-s3";
 import NodeCache from "node-cache";
 
-import * as S3_CONSTANT from "./s3-constant.js";
+import * as S3_CONSTANT from "../constants/s3-constant.js";
 
 const s3Client = new S3Client();
 

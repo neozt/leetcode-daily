@@ -1,5 +1,5 @@
-import { getPotdData } from "./leetcode-client.js";
-import { storePotdData } from "./s3-client.js";
+import { getPotdData } from "../helpers/leetcode-client.js";
+import { storePotdData } from "../helpers/s3-client.js";
 
 export const handler = async () => {
   console.log("import-job running");

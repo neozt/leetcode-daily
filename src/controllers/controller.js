@@ -1,4 +1,4 @@
-import { retrievePotdData } from "./s3-client.js";
+import { retrievePotdData } from "../helpers/s3-client.js";
 
 const BASE_URL = process.env.BASE_URL;
 

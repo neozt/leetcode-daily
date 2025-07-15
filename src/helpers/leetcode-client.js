@@ -1,4 +1,4 @@
-import { DAILY_QUESTION_QUERY } from "./leetcode-queries.js";
+import { DAILY_QUESTION_QUERY } from "../constants/leetcode-queries.js";
 import axios from "axios";
 
 const LEETCODE_API_URL =
