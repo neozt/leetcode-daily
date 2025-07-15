@@ -1,18 +1,12 @@
 import { DAILY_QUESTION_QUERY } from "./leetcode-queries.js";
 import axios from "axios";
-import NodeCache from "node-cache";
 
 const LEETCODE_API_URL =
   process.env.LEETCODE_API_URL || "https://leetcode.com/graphql";
 const LEETCODE_URL = process.env.LEETCODE_URL || "https://leetcode.com";
 
-const DAILY_QUESTION_CACHE_KEY = "DAILY_QUESTION_CACHE_KEY";
-const DAILY_QUESTION_CACHE_TTL_SECONDS = 5 * 60;
-
-const cache = new NodeCache();
-
 export async function getPotdData() {
-  const dailyQuestion = await fetchDailyQuestion(true);
+  const dailyQuestion = await fetchDailyQuestion();
 
   const { link, date } = dailyQuestion.data.activeDailyCodingChallengeQuestion;
 
@@ -31,21 +25,8 @@ export async function getPotdData() {
   };
 }
 
-export async function fetchDailyQuestion(bypassCache = false) {
-  const cachedResponse = cache.get(DAILY_QUESTION_CACHE_KEY);
-  if (!bypassCache && cachedResponse) {
-    return cachedResponse;
-  }
-
-  const response = queryLeetCodeApi(DAILY_QUESTION_QUERY, {});
-  if (response) {
-    cache.set(
-      DAILY_QUESTION_CACHE_KEY,
-      response,
-      DAILY_QUESTION_CACHE_TTL_SECONDS,
-    );
-  }
-  return response;
+export async function fetchDailyQuestion() {
+  return queryLeetCodeApi(DAILY_QUESTION_QUERY, {});
 }
 
 export function constructDailyQuestionUrl(link, date) {

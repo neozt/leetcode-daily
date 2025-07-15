@@ -1,24 +1,11 @@
-import {
-  constructDailyQuestionUrl,
-  fetchDailyQuestion,
-} from "./leetcode-client.js";
+import { retrievePotdData } from "./s3-client.js";
 
 const BASE_URL = process.env.BASE_URL;
 
 export async function redirectToDailyQuestion(req, res) {
-  const dailyQuestion = await fetchDailyQuestion();
-
-  const { link, date } = dailyQuestion.data.activeDailyCodingChallengeQuestion;
-  if (!link) {
-    console.error(
-      `Failed to retrieve daily question from Leetcode. link=${link}, response=${JSON.stringify(dailyQuestion)}`,
-    );
-    throw new Error("Failed to retrieve daily question from Leetcode");
-  }
-
-  const dailyQuestionUrl = constructDailyQuestionUrl(link, date);
-  console.log("Redirecting to: ", dailyQuestionUrl);
-  return res.redirect(303, dailyQuestionUrl);
+  const potdData = await retrievePotdData();
+  console.log("Redirecting to: ", potdData.url);
+  return res.redirect(303, potdData.url);
 }
 
 export function displayInfo(req, res) {
