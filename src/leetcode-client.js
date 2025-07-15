@@ -11,6 +11,26 @@ const DAILY_QUESTION_CACHE_TTL_SECONDS = 5 * 60;
 
 const cache = new NodeCache();
 
+export async function getPotdData() {
+  const dailyQuestion = await fetchDailyQuestion(true);
+
+  const { link, date } = dailyQuestion.data.activeDailyCodingChallengeQuestion;
+
+  if (!link) {
+    console.error(
+      `Failed to retrieve daily question from Leetcode. link=${link}, response=${JSON.stringify(dailyQuestion)}`,
+    );
+    throw new Error("Failed to retrieve daily question from Leetcode");
+  }
+  const dailyQuestionUrl = constructDailyQuestionUrl(link, date);
+
+  return {
+    link,
+    date,
+    url: dailyQuestionUrl,
+  };
+}
+
 export async function fetchDailyQuestion(bypassCache = false) {
   const cachedResponse = cache.get(DAILY_QUESTION_CACHE_KEY);
   if (!bypassCache && cachedResponse) {
