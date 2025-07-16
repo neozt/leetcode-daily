@@ -1,9 +1,7 @@
-export type LeetcodeResponse<T> = {
+export type LeetcodeGraphqlWrapper<T> = {
   data: T;
+  errors: Array<{ message: string }>;
 };
-
-export type ActiveDailyCodingChallengeQuestionResponse =
-  LeetcodeResponse<ActiveDailyCodingChallengeQuestion>;
 
 export type ActiveDailyCodingChallengeQuestion = {
   activeDailyCodingChallengeQuestion: {

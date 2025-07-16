@@ -1,6 +1,9 @@
 import { DAILY_QUESTION_QUERY } from "../constants/leetcode-queries.js";
 import axios from "axios";
-import { ActiveDailyCodingChallengeQuestionResponse } from "../types/leetcode.models";
+import {
+  ActiveDailyCodingChallengeQuestion,
+  LeetcodeGraphqlWrapper,
+} from "../types/leetcode.models";
 import { Potd } from "../types/potd.models";
 
 const LEETCODE_API_URL =
@@ -10,7 +13,7 @@ const LEETCODE_URL = process.env.LEETCODE_URL || "https://leetcode.com";
 export async function getPotdData(): Promise<Potd> {
   const dailyQuestion = await fetchDailyQuestion();
 
-  const { link, date } = dailyQuestion.data.activeDailyCodingChallengeQuestion;
+  const { link, date } = dailyQuestion;
 
   if (!link) {
     console.error(
@@ -28,10 +31,11 @@ export async function getPotdData(): Promise<Potd> {
 }
 
 export async function fetchDailyQuestion() {
-  return queryLeetCodeApi<ActiveDailyCodingChallengeQuestionResponse>(
+  const response = await queryLeetCodeApi<ActiveDailyCodingChallengeQuestion>(
     DAILY_QUESTION_QUERY,
     {},
   );
+  return response.activeDailyCodingChallengeQuestion;
 }
 
 export function constructDailyQuestionUrl(link: string, date: string): string {
@@ -45,7 +49,10 @@ async function queryLeetCodeApi<R>(
 ): Promise<R> {
   let response;
   try {
-    response = await axios.post(LEETCODE_API_URL, { query, variables });
+    response = await axios.post<LeetcodeGraphqlWrapper<R>>(LEETCODE_API_URL, {
+      query,
+      variables,
+    });
   } catch (error) {
     if (error.response) {
       throw new Error(
@@ -61,5 +68,5 @@ async function queryLeetCodeApi<R>(
   if (response.data.errors) {
     throw new Error(response.data.errors[0].message);
   }
-  return response.data;
+  return response.data.data;
 }
