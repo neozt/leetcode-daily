@@ -6,6 +6,7 @@ import {
 import NodeCache from "node-cache";
 
 import * as S3_CONSTANT from "../constants/s3-constant.js";
+import { Potd } from "../types/potd.models";
 
 const s3Client = new S3Client();
 
@@ -14,7 +15,7 @@ const POTD_CACHE_TTL_SECONDS = 60;
 
 const cache = new NodeCache();
 
-export async function storePotdData(potdData) {
+export async function storePotdData(potdData: Potd) {
   const putObjectRequest = {
     Bucket: S3_CONSTANT.BUCKET_NAME,
     Key: S3_CONSTANT.POTD_FILE_NAME,
@@ -38,17 +39,23 @@ export async function storePotdData(potdData) {
 export async function retrievePotdData() {
   const cachedResponse = cache.get(POTD_CACHE_KEY);
   if (cachedResponse) {
-    return cachedResponse;
+    return cachedResponse as Potd;
   }
 
-  const result = await s3Client.send(
+  const s3Response = await s3Client.send(
     new GetObjectCommand({
       Bucket: S3_CONSTANT.BUCKET_NAME,
       Key: S3_CONSTANT.POTD_FILE_NAME,
     }),
   );
-  const potd = await JSON.parse(await result.Body.transformToString("utf-8"));
 
+  if (!s3Response.Body) {
+    throw new Error("s3Response.Body is undefined");
+  }
+
+  const potd = (await JSON.parse(
+    await s3Response.Body.transformToString("utf-8"),
+  )) as Potd;
   if (potd) {
     cache.set(POTD_CACHE_KEY, potd, POTD_CACHE_TTL_SECONDS);
   }

@@ -1,7 +1,6 @@
 {
   "name": "leetcode-daily",
   "version": "1.0.0",
-  "type": "module",
   "description": "",
   "scripts": {
     "deploy": "serverless deploy",
@@ -21,9 +20,13 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",
+    "@types/aws-lambda": "^8.10.150",
+    "@types/express": "^5.0.3",
+    "@types/proxy-addr": "^2.0.3",
     "eslint": "^9.30.1",
     "eslint-config-prettier": "^10.1.5",
     "globals": "^16.3.0",
-    "prettier": "3.6.2"
+    "prettier": "3.6.2",
+    "typescript": "^5.8.3"
   }
 }

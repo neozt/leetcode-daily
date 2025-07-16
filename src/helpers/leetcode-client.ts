@@ -1,11 +1,13 @@
 import { DAILY_QUESTION_QUERY } from "../constants/leetcode-queries.js";
 import axios from "axios";
+import { ActiveDailyCodingChallengeQuestionResponse } from "../types/leetcode.models";
+import { Potd } from "../types/potd.models";
 
 const LEETCODE_API_URL =
   process.env.LEETCODE_API_URL || "https://leetcode.com/graphql";
 const LEETCODE_URL = process.env.LEETCODE_URL || "https://leetcode.com";
 
-export async function getPotdData() {
+export async function getPotdData(): Promise<Potd> {
   const dailyQuestion = await fetchDailyQuestion();
 
   const { link, date } = dailyQuestion.data.activeDailyCodingChallengeQuestion;
@@ -26,15 +28,21 @@ export async function getPotdData() {
 }
 
 export async function fetchDailyQuestion() {
-  return queryLeetCodeApi(DAILY_QUESTION_QUERY, {});
+  return queryLeetCodeApi<ActiveDailyCodingChallengeQuestionResponse>(
+    DAILY_QUESTION_QUERY,
+    {},
+  );
 }
 
-export function constructDailyQuestionUrl(link, date) {
+export function constructDailyQuestionUrl(link: string, date: string): string {
   // eg https://leetcode.com/problems/meeting-rooms-iii/?envType=daily-question&envId=2025-07-11
   return `${LEETCODE_URL}${link}?envType=daily-question&envId=${date}`;
 }
 
-async function queryLeetCodeApi(query, variables) {
+async function queryLeetCodeApi<R>(
+  query: string,
+  variables: object,
+): Promise<R> {
   let response;
   try {
     response = await axios.post(LEETCODE_API_URL, { query, variables });
