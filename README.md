@@ -12,6 +12,7 @@ Access the website here:
 - ExpressJS
 - Serverless Framework
 - AWS Lambda
+- DynamoDB
 
 ## 🚀 Getting Started
 
