@@ -10,7 +10,8 @@ provider:
   runtime: nodejs20.x
   region: ap-southeast-1
   environment:
-    BASE_URL: https://leetcode-daily.neozt.dev
+    BASE_URL: https://leetcode-daily.neozt.dev/
+    GITHUB_URL: https://github.com/neozt/leetcode-daily
     DAILY_QUESTION_TABLE_NAME:
       Ref: DailyQuestion
 
