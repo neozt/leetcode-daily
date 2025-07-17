@@ -27,12 +27,20 @@ provider:
       Resource:
         - "Fn::GetAtt": [ DailyQuestion, Arn ]
 
+stages:
+  default:
+    params:
+      dailyQuestionTableName: DailyQuestion-${sls:stage}
+  prod:
+    params:
+      dailyQuestionTableName: DailyQuestion
+
 resources:
   Resources:
     DailyQuestion:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: DailyQuestion
+        TableName: ${param:dailyQuestionTableName}
         BillingMode: PROVISIONED
         AttributeDefinitions:
           - AttributeName: type
@@ -45,7 +53,7 @@ resources:
           - AttributeName: date
             KeyType: RANGE
         ProvisionedThroughput:
-          ReadCapacityUnits: 5
+          ReadCapacityUnits: 1
           WriteCapacityUnits: 1
 
 functions:

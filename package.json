@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "deploy": "serverless deploy",
+    "deploy": "serverless deploy --stage prod",
     "dev": "serverless dev",
     "eslint": "npx eslint .",
     "prettier": "npx prettier . --write",

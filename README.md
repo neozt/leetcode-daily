@@ -21,7 +21,11 @@ Access the website here:
 ## 💻 Deployment
 
 - The site is deployed to AWS Lambda using Serverless Framework.
-- Run `serverless deploy` to deploy latest changes.
+- Run `serverless deploy --stage prod` to deploy latest changes.
+
+## Stages
+1. prod - Production deployment
+2. dev - Default stage, for testing
 
 ## Acknowledgements
 
