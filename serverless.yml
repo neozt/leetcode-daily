@@ -11,21 +11,42 @@ provider:
   region: ap-southeast-1
   environment:
     BASE_URL: https://leetcode-daily.neozt.dev
+    DAILY_QUESTION_TABLE_NAME:
+      Ref: DailyQuestion
 
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - s3:*
-      Resource: "arn:aws:s3:::leetcode-daily/*"
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        - "Fn::GetAtt": [ DailyQuestion, Arn ]
 
 resources:
   Resources:
-    MyS3Bucket:
-      Type: AWS::S3::Bucket
+    DailyQuestion:
+      Type: AWS::DynamoDB::Table
       Properties:
-        BucketName: leetcode-daily
-        VersioningConfiguration:
-          Status: Enabled
+        TableName: DailyQuestion
+        BillingMode: PROVISIONED
+        AttributeDefinitions:
+          - AttributeName: type
+            AttributeType: S
+          - AttributeName: date
+            AttributeType: S
+        KeySchema:
+          - AttributeName: type
+            KeyType: HASH
+          - AttributeName: date
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 1
 
 functions:
   api:

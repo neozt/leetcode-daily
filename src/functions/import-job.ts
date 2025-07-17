@@ -1,8 +1,8 @@
 import { getPotdData } from "../helpers/leetcode-client.js";
-import { storePotdData } from "../helpers/s3-client.js";
 import { Handler } from "aws-lambda";
+import { storePotdData } from "../helpers/dynamodb-client";
 
-export const handler: Handler = async (event, context, callback) => {
+export const handler: Handler = async () => {
   console.log("import-job running");
 
   const potdData = await getPotdData();
