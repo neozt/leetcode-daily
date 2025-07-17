@@ -12,8 +12,7 @@ provider:
   environment:
     BASE_URL: https://leetcode-daily.neozt.dev/
     GITHUB_URL: https://github.com/neozt/leetcode-daily
-    DAILY_QUESTION_TABLE_NAME:
-      Ref: DailyQuestion
+    DAILY_QUESTION_TABLE_NAME: !Ref DailyQuestion
 
   iamRoleStatements:
     - Effect: Allow
@@ -25,8 +24,7 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource:
-        - "Fn::GetAtt": [ DailyQuestion, Arn ]
+      Resource: !GetAtt DailyQuestion.Arn
 
 stages:
   default:
