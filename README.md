@@ -21,6 +21,7 @@ Access the website here:
 2. Run `serverless remove` to remove once you are done to clean up resources.
 
 ## Architecture
+
 ![leetcode-daily architecture diagram](docs/architecture.drawio.png)
 
 ## 📦 Deployment
