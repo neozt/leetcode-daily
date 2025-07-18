@@ -24,6 +24,7 @@ Access the website here:
 - Run `serverless deploy --stage prod` to deploy latest changes.
 
 ## Stages
+
 1. prod - Production deployment
 2. dev - Default stage, for testing
 
