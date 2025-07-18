@@ -8,6 +8,10 @@ Access the website here:
 - https://leetcode-daily.neozt.dev/
 - https://leetcode-daily.neozt.dev/about
 
+## 🏢 Architecture
+
+![leetcode-daily architecture diagram](docs/architecture.drawio.png)
+
 ## 🛠️ Stack
 
 - ExpressJS
@@ -19,10 +23,6 @@ Access the website here:
 
 1. Run `serverless dev` to deploy to `dev` stage and proxy all Lambda calls to local machine.
 2. Run `serverless remove` to remove once you are done to clean up resources.
-
-## Architecture
-
-![leetcode-daily architecture diagram](docs/architecture.drawio.png)
 
 ## 📦 Deployment
 
