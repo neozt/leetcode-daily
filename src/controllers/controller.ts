@@ -11,6 +11,8 @@ export const redirectToDailyQuestion: RequestHandler = async (req, res) => {
     return res.status(404).json({ error: "POTD not found" });
   }
 
+  const a = "unused";
+
   console.log("Redirecting to: ", potdData.url);
   return res.redirect(303, potdData.url);
 };
