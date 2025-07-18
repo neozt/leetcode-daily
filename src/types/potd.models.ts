@@ -1,11 +1,4 @@
-export type Potd = {
-  link: string;
-  date: string;
-  url: string;
-};
-
-export type PotdEntity = {
-  type: string;
+export type PotdDetails = {
   link: string;
   date: string;
   url: string;

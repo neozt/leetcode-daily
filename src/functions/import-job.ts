@@ -1,15 +1,16 @@
-import { getPotdData } from "../helpers/leetcode-client.js";
 import { Handler } from "aws-lambda";
-import { storePotdData } from "../helpers/dynamodb-client";
+import { refreshLatestPotd } from "../services/potd.service";
 
+/**
+ * Scheduled job to pre-fetch each day's POTD
+ */
 export const handler: Handler = async () => {
-  console.log("import-job running");
+  console.log("[import-job] Job running...");
 
-  const potdData = await getPotdData();
+  const potd = await refreshLatestPotd(new Date());
 
-  await storePotdData(potdData);
-
-  console.log("import-job complete");
+  console.log(`[import-job] Refreshed latest POTD: ${JSON.stringify(potd)}`);
+  console.log("[import-job] Job complete");
 
   return "Success";
 };

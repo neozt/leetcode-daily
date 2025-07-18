@@ -1,16 +1,16 @@
-import { DAILY_QUESTION_QUERY } from "../constants/leetcode-queries.js";
+import { DAILY_QUESTION_QUERY } from "../constants/leetcode.queries";
 import axios from "axios";
 import {
   ActiveDailyCodingChallengeQuestion,
   LeetcodeGraphqlWrapper,
 } from "../types/leetcode.models";
-import { Potd } from "../types/potd.models";
+import { PotdDetails } from "../types/potd.models";
 
 const LEETCODE_API_URL =
   process.env.LEETCODE_API_URL || "https://leetcode.com/graphql";
 const LEETCODE_URL = process.env.LEETCODE_URL || "https://leetcode.com";
 
-export async function getPotdData(): Promise<Potd> {
+export async function fetchPotdDetails(): Promise<PotdDetails> {
   const dailyQuestion = await fetchDailyQuestion();
 
   const { link, date } = dailyQuestion;
