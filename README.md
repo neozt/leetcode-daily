@@ -8,6 +8,10 @@ Access the website here:
 - https://leetcode-daily.neozt.dev/
 - https://leetcode-daily.neozt.dev/about
 
+## 🏢 Architecture
+
+![Architecture diagram](docs/architecture.drawio.png)
+
 ## 🛠️ Stack
 
 - ExpressJS
