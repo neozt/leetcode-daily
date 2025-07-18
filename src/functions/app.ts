@@ -2,10 +2,7 @@ import serverless from "serverless-http";
 import express from "express";
 import rateLimit from "express-rate-limit";
 import proxyaddr from "proxy-addr";
-import {
-  displayInfo,
-  redirectToDailyQuestion,
-} from "../controllers/controller.js";
+import { displayInfo, redirectToDailyQuestion } from "../routes/app.routes";
 
 const app = express();
 

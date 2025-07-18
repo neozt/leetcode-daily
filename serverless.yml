@@ -1,8 +1,5 @@
-# "org" ensures this Service is used with the correct Serverless Framework Access Key.
 org: neozt
-# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
 app: leetcode-daily
-# "service" is the name of this project. This will also be added to your AWS resource names.
 service: leetcode-daily
 
 provider:
@@ -42,15 +39,11 @@ resources:
         TableName: ${param:dailyQuestionTableName}
         BillingMode: PROVISIONED
         AttributeDefinitions:
-          - AttributeName: type
-            AttributeType: S
           - AttributeName: date
             AttributeType: S
         KeySchema:
-          - AttributeName: type
-            KeyType: HASH
           - AttributeName: date
-            KeyType: RANGE
+            KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
