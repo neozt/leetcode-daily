@@ -20,7 +20,10 @@ Access the website here:
 1. Run `serverless dev` to deploy to `dev` stage and proxy all Lambda calls to local machine.
 2. Run `serverless remove` to remove once you are done to clean up resources.
 
-## 💻 Deployment
+## Architecture
+![leetcode-daily architecture diagram](docs/architecture.drawio.png)
+
+## 📦 Deployment
 
 - The site is deployed to AWS Lambda using Serverless Framework.
 - CI/CD is configured using Github Actions to automatically deploy changes to AWS once the changes are merged into
