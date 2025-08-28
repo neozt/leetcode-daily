@@ -60,7 +60,7 @@ functions:
   #      - httpApi: "GET /ip"
 
   import-job:
-    description: Scheduled job to save Leetcode POTD data into S3.
+    description: Scheduled job to save Leetcode POTD data into DynamoDB.
     handler: src/functions/import-job.handler
     memorySize: 512
     logRetentionInDays: 14
